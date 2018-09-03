@@ -1,10 +1,12 @@
 {
-  "name": "df18demo",
+  "name": "sfmc-df18demo",
   "version": "1.0.0",
-  "description": "Marketing Cloud REST API demo for Dreamforce 2018",
-  "main": "server.js",
+  "description": "Getting Started with Marketing Cloud API Integrations - Dreamforce 2018",
+  "main": "dist/server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node dist/server.js",
+    "build": "tsc",
+    "postinstall": "npm run-script build"
   },
   "engines": {
     "node": "^9.3.0",
@@ -12,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sanagama/df18demo.git"
+    "url": "git+https://github.com/sanagama/sfmc-df18demo.git"
   },
   "keywords": [
     "Salesforce",
@@ -21,10 +23,18 @@
   "author": "Sanjay Nagamangalam",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sanagama/df18demo/issues"
+    "url": "https://github.com/sanagama/sfmc-df18demo/issues"
   },
-  "homepage": "https://github.com/sanagama/df18demo#readme",
+  "homepage": "https://github.com/sanagama/sfmc-df18demo#readme",
   "dependencies": {
+    "@types/compression": "0.0.36",
+    "@types/errorhandler": "0.0.32",
+    "@types/express": "^4.16.0",
+    "@types/express-session": "^1.15.10",
+    "@types/jquery": "^3.3.6",
+    "@types/morgan": "^1.7.35",
+    "@types/node": "^10.9.4",
+    "@types/serve-favicon": "^2.2.30",
     "body-parser": "^1.18.3",
     "compression": "^1.7.3",
     "cookie-parser": "^1.4.3",
@@ -34,6 +44,7 @@
     "express-session": "^1.15.6",
     "helmet": "^3.13.0",
     "morgan": "^1.9.0",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "typescript": "^3.0.3"
   }
 }
