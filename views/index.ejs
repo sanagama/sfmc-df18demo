@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ./partials/header.ejs %>
+</head>
+
+<body>
+
+  <% include ./partials/brand.ejs %>
+
+  <div class="container-fluid text-center">
+    <h2>Getting started with Marketing Cloud API Integrations</h2>
+    <p>
+    <h2><small>Dreamforce 2018</small></h3>
+  </div>
+
+  <div class="container-fluid">
+    <p class="lead">Choose a demo to try</p>
+
+    <div class="row">
+
+      <div class="col-md">
+        <div class="card mt-3 mb-5">
+          <div class="card-body">
+            <h6 class="card-subtitle mb-3"><strong>Marketing Cloud REST API demo</strong></h6>
+            <p class="card-text">Use Marketing Cloud REST APIs to load into a Data Extension.</p>
+            <a href="/demo1" class="btn btn-primary">Try this demo</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md">
+        <div class="card mt-3 mb-5">
+          <div class="card-body">
+            <h6 class="card-subtitle mb-3"><strong>Marketing Cloud App demo</strong></h6>
+            <p class="card-text">Integrate a web app hosted anywhere within the Marketing Cloud web interface.</p>
+            <a href="/demo2" class="btn btn-primary">Try this demo</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <% include ./partials/footer.ejs %>
+
+</body>
+</html>
