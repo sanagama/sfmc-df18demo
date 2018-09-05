@@ -32,9 +32,12 @@
     "@types/express": "^4.16.0",
     "@types/express-session": "^1.15.10",
     "@types/jquery": "^3.3.6",
+    "@types/jwt-simple": "^0.5.33",
     "@types/morgan": "^1.7.35",
     "@types/node": "^10.9.4",
+    "@types/node-fetch": "^2.1.2",
     "@types/serve-favicon": "^2.2.30",
+    "@types/winston": "^2.4.4",
     "body-parser": "^1.18.3",
     "compression": "^1.7.3",
     "cookie-parser": "^1.4.3",
@@ -43,8 +46,11 @@
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "helmet": "^3.13.0",
+    "jwt-simple": "^0.5.1",
     "morgan": "^1.9.0",
+    "node-fetch": "^2.2.0",
     "serve-favicon": "^2.5.0",
-    "typescript": "^3.0.3"
+    "typescript": "^3.0.3",
+    "winston": "^3.1.0"
   }
 }

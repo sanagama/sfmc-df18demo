@@ -1,8 +1,7 @@
 'use strict';
 
 import express = require("express");
-import path = require('path');
-import Utils = require('./utils');
+import winston = require("winston");
 
 export default class SfmcAppHelper
 {
@@ -15,7 +14,7 @@ export default class SfmcAppHelper
     public login(req: express.Request, res: express.Response)
     {
         var sessionId = req.session.id;
-        Utils.logDebug("login called. SessionId = " + sessionId);
+        winston.info("login called. SessionId = " + sessionId);
 
         // Parse JWT from body
 
@@ -29,7 +28,7 @@ export default class SfmcAppHelper
     public logout(req: express.Request, res: express.Response)
     {
         var sessionId = req.session.id;
-        Utils.logDebug("logout called. SessionId = " + sessionId);
+        winston.info("logout called. SessionId = " + sessionId);
 
         // Parse JWT from body
 
@@ -43,7 +42,7 @@ export default class SfmcAppHelper
     public getJwtInfo(req: express.Request, res: express.Response)
     {
         var sessionId = req.session.id;
-        Utils.logDebug("login called. SessionId = " + sessionId);
+        winston.info("getJwtInfo called. SessionId = " + sessionId);
 
         // Parse JWT from body
 

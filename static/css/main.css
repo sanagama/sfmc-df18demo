@@ -1,5 +1,5 @@
 h2 {
-    color: #532F8C; }
+    color: rgb(0, 120, 170); }
   
   .jumbotron {
     background: #532F8C;
@@ -8,6 +8,9 @@ h2 {
     padding-top: 50px;
     padding-bottom: 50px;}
   
+  .card-header {
+    background-color: rgb(0, 120, 170); }
+
   .jumbotron p {
       color: #d9ccee;}
   

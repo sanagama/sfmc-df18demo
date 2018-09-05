@@ -10,7 +10,7 @@ import * as path from "path";
 import * as favicon from "serve-favicon";
 import * as session from "express-session";
 
-import SfmcApiHelper from './SfmcApiHelper';
+import SfmcDataExtensionAPI from './SfmcDataExtensionAPI';
 import SfmcAppHelper from './SfmcAppHelper';
 
 const PORT = process.env.PORT || 5000
@@ -56,13 +56,13 @@ app.get('/demo1', function(req, res) { res.render("demo1"); });
 app.get('/demo2', function(req, res) { res.render("demo2"); });
 
 // Routes: used by this app to call Marketing Cloud APIs
-const sfmcApiHelper = new SfmcApiHelper();
+const deApi = new SfmcDataExtensionAPI();
 
-app.post('/newdataextension', function(req, res) {
-  sfmcApiHelper.newDataExtension(req, res); });
+app.get('/accesstoken', function(req, res) {
+  deApi.initAccessToken(req, res); });
 
 app.post('/loaddata', function(req, res) {
-  sfmcApiHelper.loadData(req, res); });
+  deApi.loadData(req, res); });
   
 // Routes: called by Marketing Cloud when hosted within IFRAME
 const sfmcAppHelper = new SfmcAppHelper();
