@@ -9,9 +9,7 @@ import * as logger from "morgan";
 import * as path from "path";
 import * as favicon from "serve-favicon";
 import * as session from "express-session";
-
-import SfmcDataExtensionAPI from './SfmcDataExtensionAPI';
-import SfmcAppHelper from './SfmcAppHelper';
+import SfmcApiHelper from './SfmcApiHelper';
 
 const PORT = process.env.PORT || 5000
 
@@ -55,25 +53,23 @@ app.get('/', function(req, res) { res.render("index"); });
 app.get('/demo1', function(req, res) { res.render("demo1"); });
 app.get('/demo2', function(req, res) { res.render("demo2"); });
 
-// Routes: used by this app to call Marketing Cloud APIs
-const deApi = new SfmcDataExtensionAPI();
+// Routes: used by this demo app that internally call Marketing Cloud APIs
+const apiHelper = new SfmcApiHelper();
 
 app.get('/accesstoken', function(req, res) {
-  deApi.initAccessToken(req, res); });
+  apiHelper.getOAuthAccessToken(req, res); });
 
-app.post('/loaddata', function(req, res) {
-  deApi.loadData(req, res); });
-  
-// Routes: called by Marketing Cloud when hosted within IFRAME
-const sfmcAppHelper = new SfmcAppHelper();
-
-app.post('/login', function(req, res) {
-  sfmcAppHelper.login(req, res); });
-
-app.post('/logout', function(req, res) {
-  sfmcAppHelper.logout(req, res); });
+app.get('/loaddata', function(req, res) {
+  apiHelper.loadDataIntoDataExtension(req, res); });
 
 app.get('/jwtinfo', function(req, res) {
-  sfmcAppHelper.getJwtInfo(req, res); });
+  apiHelper.getJwtInfo(req, res); });
+    
+// Routes: called by Marketing Cloud when this demo app is hosted within an IFRAME
+app.post('/login', function(req, res) {
+  apiHelper.login(req, res); });
+
+app.post('/logout', function(req, res) {
+  apiHelper.logout(req, res); });
 
 module.exports = app;
