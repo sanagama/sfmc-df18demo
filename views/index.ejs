@@ -10,7 +10,6 @@
 
   <div class="container">
     <h2>Getting Started With Salesforce Marketing Cloud API Integrations</h2>
-    <p>
     <h2><small>Dreamforce 2018</small></h3>
   </div>
 
@@ -18,14 +17,14 @@
   <!-- Demo steps -->
   <div class="container">
 
-    <p class="mt-3">This demo app uses Marketing Cloud REST APIs to load sample data into a Data Extension.</p>
+    <h4>Use Marketing Cloud REST APIs to load sample data into a Data Extension.</h4>
 
     <!-- Step 1 -->
     <div class="card mt-3">
         <div class="card-block">
           <div class="card-header text-white">Step 1: Create a Data Extension</div>
           <div class="card-body">
-            <h6 class="card-subtitle mb-3">You need a Data Extension for this demo app to use.</h6>
+            <h6 class="card-subtitle mb-3">You need a Data Extension for this demo app.</h6>
             <p class="card-text">Login to your Marketing Cloud account and follow instructions at <a href="https://help.salesforce.com/articleView?id=mc_cab_create_a_new_data_extension.htm&type=5" target="_blank">Create Data Extension</a> to create a new Standard Data Extension as follows:</p>
  
             <table class="table table-bordered table-hover table-sm">
@@ -45,12 +44,12 @@
                 <tr>
                   <td>Name</td>
                   <td><mark>DF18Demo</mark></td>
-                  <td>Unique name of Data Extension</td>
+                  <td>Name of the Data Extension</td>
                 </tr>
                 <tr>
                   <td>External Key</td>
                   <td><mark>DF18Demo</mark></td>
-                  <td>Unique identifier for use in API calls for programmatic access</td>
+                  <td>Unique identifier used in REST API calls for programmatic access</td>
                 </tr>
                 <tr>
                   <td>Is Sendable</td>
@@ -72,19 +71,19 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>ID</td>
+                  <td>id</td>
                   <td>Number</td>
                   <td>N/A</td>
                   <td>Yes (Checked)</td>
                 </tr>
                 <tr>
-                  <td>Name</td>
+                  <td>name</td>
                   <td>Text</td>
                   <td>50</td>
                   <td>No (Unchecked)</td>
                 </tr>
                 <tr>
-                  <td>Email</td>
+                  <td>email</td>
                   <td>EmailAddress</td>
                   <td>254</td>
                   <td>No (Unchecked)</td>
@@ -98,7 +97,6 @@
       </div>
   
     <!-- Step 2 -->
-    <!-- Integrate an externally hosted app via iframe. -->
     <div class="card mt-3">
       <div class="card-block">
         <div class="card-header text-white">Step 2: Get an API key</div>
@@ -126,17 +124,17 @@ DF18DEMO_CLIENTSECRET=<mark>YOUR_CLIENT_SECRET</mark>
         <div class="card-body">
           <h6 class="card-subtitle mb-3">You need an OAuth access token to authenticate your Marketing Cloud API calls.</h6>
           <p class="card-text">Click <kbd>EXECUTE REQUEST</kbd> to call the Marketing Cloud REST Auth service and get back an OAuth access token. This token is valid for 60 minutes.</p>
-          <p class="card-text">The demo app updates the JSON body shown below with your <code>ClientID</code> and <code>ClientSecret</code> from environment variables before calling POST.</p>
+          <p class="card-text">The demo app updates <mark>YOUR_CLIENT_ID</mark> and <mark>YOUR_CLIENT_SECRET</mark> in the JSON body with your <code>ClientID</code> and <code>ClientSecret</code> from environment variables before calling POST.</p>
 
           <div class="table-responsive">       
             <table class="table table-bordered">
               <thead class="thead-light">
                 <tr>
-                  <th scope="col">
+                  <th style="width: 50%" scope="col">
                     <button type="button" id="btnGetOauthToken" class="btn btn-primary"
                       onclick="doRestGet('/accesstoken','textOauthPostResponse')">EXECUTE REQUEST</button>
                   </th>
-                  <th scope="col">RESPONSE</th>
+                  <th style="width: 50%" scope="col">RESPONSE</th>
                 </tr>
               </thead>
               <tbody>
@@ -153,11 +151,11 @@ https://auth.exacttargetapis.com/v1/requestToken</pre>
                     <h6>Request Body</h6>
 <pre>
 {
-  "clientId": "<mark>YOUR_CLIENT_ID</mark>",
-  "clientSecret": "<mark>YOUR_CLIENT_SECRET</mark>"
+  "clientId": <mark>YOUR_CLIENT_ID</mark>,
+  "clientSecret": <mark>YOUR_CLIENT_SECRET</mark>
 }</pre>
                   </td>
-                  <td><pre id="textOauthPostResponse">Nothing yet. Click <kbd>EXECUTE REQUEST</kbd> to see response.</pre></td>
+                  <td><pre id="textOauthPostResponse">Click <kbd>EXECUTE REQUEST</kbd> to see response.</pre></td>
                 </tr>
               </tbody>
             </table>
@@ -176,26 +174,28 @@ https://auth.exacttargetapis.com/v1/requestToken</pre>
         <div class="card-body">
           <h6 class="card-subtitle mb-3">Use the Marketing Cloud REST API to load data into the Data Extension.</h6>
           <p class="card-text">Click <kbd>EXECUTE REQUEST</kbd> to call the Marketing Cloud REST API to load data.</p>
-          <p class="card-text">The demo app updates the JSON body in the request below with the OAuth token before calling POST.</p>
+          <p class="card-text">The demo app updates <mark>OAUTH_ACCESS_TOKEN</mark> in the JSON body with the OAuth token before calling POST.<p>
+          <p class="card-text">Note how we're passing <mark>DF18Demo</mark> in the URL as the External Key of the Data Extension.</p>
 
           <div class="table-responsive">       
             <table class="table table-bordered">
               <thead class="thead-light">
                 <tr>
-                  <th scope="col">
+                  <th style="width: 50%">
                     <button type="button" id="btnLoadData" class="btn btn-primary"
                       onclick="doRestGet('/loaddata','textLoadDataPostResponse')">EXECUTE REQUEST</button>
                   </th>
-                  <th scope="col">RESPONSE</th>
+                  <th style="width: 50%">RESPONSE</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>
                     <h6>URL</h6>
-                    <pre>
+<pre>
 POST
-https://www.exacttargetapis.com/hub/v1/dataevents/<mark>key:DF18Demo</mark>/rowset</pre>
+https://www.exacttargetapis.com/hub/v1/dataevents/<mark>key:DF18Demo</mark>/rowset
+</pre>
                     <p>
                     <h6>Headers</h6>
 <pre>
@@ -204,26 +204,9 @@ Authorization: Bearer <mark>OAUTH_ACCESS_TOKEN</mark>
 </pre>
                     <p>
                     <h6>Request Body</h6>
-<pre>
-{
-  [
-    {
-      "keys":
-      {
-        "ID": "1"
-      },
-      "values":
-      {
-        "name": "Sanjay",
-        “email”: sanjay@sanjay.com”
-      }
-    }
-  ]
-}
-</pre>                    
-                           
+                    <pre><% include ../static/json/sample-data.json %></pre>                    
                   </td>
-                  <td><pre id="textLoadDataPostResponse">Nothing yet. Click <kbd>EXECUTE REQUEST</kbd> to see response.</pre></td>
+                  <td><pre id="textLoadDataPostResponse">Click <kbd>EXECUTE REQUEST</kbd> to see response.</pre></td>
                 </tr>
               </tbody>
             </table>

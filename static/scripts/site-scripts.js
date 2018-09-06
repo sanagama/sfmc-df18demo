@@ -1,9 +1,6 @@
 
 // make REST API 'GET' call to the specified end-point and dump response in specified <div>
 function doRestGet(endPoint, idStatusArea) {
-
-    alert('endPoint = ' + endPoint + ', statusArea =  ' + idStatusArea)
-
     $.ajax({
         type: "GET",
         url: endPoint,

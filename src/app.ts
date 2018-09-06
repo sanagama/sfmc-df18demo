@@ -60,7 +60,7 @@ app.get('/accesstoken', function(req, res) {
   apiHelper.getOAuthAccessToken(req, res); });
 
 app.get('/loaddata', function(req, res) {
-  apiHelper.loadDataIntoDataExtension(req, res); });
+  apiHelper.loadData(req, res); });
 
 app.get('/jwtinfo', function(req, res) {
   apiHelper.getJwtInfo(req, res); });
