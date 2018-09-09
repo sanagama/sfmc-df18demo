@@ -9,7 +9,8 @@ import * as logger from "morgan";
 import * as path from "path";
 import * as favicon from "serve-favicon";
 import * as session from "express-session";
-import SfmcApiHelper from './SfmcApiHelper';
+import SfmcApiDemoRoutes from './SfmcApiDemoRoutes';
+import SfmcAppDemoRoutes from './SfmcAppDemoRoutes';
 
 const PORT = process.env.PORT || 5000
 
@@ -49,27 +50,32 @@ app.use(express.static(path.join(__dirname, "../static")));
 app.use(favicon(path.join(__dirname,'../static','images','favicons', 'favicon.ico')));
 
 // Routes: pages
-app.get('/', function(req, res) { res.render("index"); });
-app.get('/demo1', function(req, res) { res.render("demo1"); });
-app.get('/demo2', function(req, res) { res.render("demo2"); });
+app.get('/', function(req, res) { res.render("apidemo"); });
+app.get('/apidemo', function(req, res) { res.render("apidemo"); });
+app.get('/appdemo', function(req, res) { res.render("apdemo"); });
 
-// Routes: used by this demo app that internally call Marketing Cloud APIs
-const apiHelper = new SfmcApiHelper();
+// Routes: used by this demo app that internally call Marketing Cloud REST APIs
+const apiDemoRoutes = new SfmcApiDemoRoutes();
 
-app.get('/accesstoken', function(req, res) {
-  apiHelper.getOAuthAccessToken(req, res); });
+app.get('/apidemooauthtoken', function(req, res) {
+  apiDemoRoutes.getOAuthAccessToken(req, res); });
 
-app.get('/loaddata', function(req, res) {
-  apiHelper.loadData(req, res); });
-
-app.get('/jwtinfo', function(req, res) {
-  apiHelper.getJwtInfo(req, res); });
+app.get('/apidemoloaddata', function(req, res) {
+  apiDemoRoutes.loadData(req, res); });
     
-// Routes: called by Marketing Cloud when this demo app is hosted within an IFRAME
+// Routes: called when this demo app is hosted within an IFRAME in the Marketing Cloud web UI
+const appDemoRoutes = new SfmcAppDemoRoutes();
+
+app.get('/appdemoauthtoken', function(req, res) {
+  appDemoRoutes.getOAuthAccessToken(req, res); });
+
+app.get('/appdemoloaddata', function(req, res) {
+  appDemoRoutes.loadData(req, res); });
+  
 app.post('/login', function(req, res) {
-  apiHelper.login(req, res); });
+  appDemoRoutes.login(req, res); });
 
 app.post('/logout', function(req, res) {
-  apiHelper.logout(req, res); });
+  appDemoRoutes.logout(req, res); });
 
 module.exports = app;

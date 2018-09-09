@@ -10,9 +10,8 @@
 
   <div class="container">
     <h2>Getting Started With Salesforce Marketing Cloud API Integrations</h2>
-    <h2><small>Dreamforce 2018</small></h3>
+    <h2><small>Dreamforce 2018</small></h2>
   </div>
-
 
   <!-- Demo steps -->
   <div class="container">
@@ -21,80 +20,40 @@
 
     <!-- Step 1 -->
     <div class="card mt-3">
-        <div class="card-block">
-          <div class="card-header text-white">Step 1: Create a Data Extension</div>
-          <div class="card-body">
-            <h6 class="card-subtitle mb-3">You need a Data Extension for this demo app.</h6>
-            <p class="card-text">Login to your Marketing Cloud account and follow instructions at <a href="https://help.salesforce.com/articleView?id=mc_cab_create_a_new_data_extension.htm&type=5" target="_blank">Create Data Extension</a> to create a new Standard Data Extension as follows:</p>
+      <div class="card-block">
+        <div class="card-header text-white">Step 1: Create a Data Extension</div>
+        <div class="card-body">
+          <h6 class="card-subtitle mb-3">You need a Data Extension for this demo app.</h6>
+          <p class="card-text">Login to your Marketing Cloud account and follow instructions at <a href="https://help.salesforce.com/articleView?id=mc_cab_create_a_new_data_extension.htm&type=5" target="_blank">Create Data Extension</a> to create a new Standard Data Extension as follows:</p>
  
-            <table class="table table-bordered table-hover table-sm">
-              <thead>
-                <tr>
-                  <th scope="col">Property</th>
-                  <th scope="col">Value</th>
-                  <th scope="col">Purpose</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Creation Method</td>
-                  <td>Create from New</td>
-                  <td>Creates a new Data Extension with fields you specify</td>
-                </tr>
-                <tr>
-                  <td>Name</td>
-                  <td><mark>DF18Demo</mark></td>
-                  <td>Name of the Data Extension</td>
-                </tr>
-                <tr>
-                  <td>External Key</td>
-                  <td><mark>DF18Demo</mark></td>
-                  <td>Unique identifier used in REST API calls for programmatic access</td>
-                </tr>
-                <tr>
-                  <td>Is Sendable</td>
-                  <td>No (Unchecked)</td>
-                  <td></td>
-                </tr>
-              </tbody>
-            </table>
+          <table class="table table-bordered table-hover table-sm">
+            <thead>
+              <tr><th>Property</th><th>Value</th><th>Purpose</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Creation Method</td><td>Create from New</td><td>Creates a new Data Extension with fields you specify</td></tr>
+              <tr><td>Name</td><td><mark>DF18Demo</mark></td><td>Name of the Data Extension</td></tr>
+              <tr><td>External Key</td><td><mark>DF18Demo</mark></td><td>Unique identifier used in REST API calls for programmatic access</td></tr>
+              <tr><td>Is Sendable</td><td>No (Unchecked)</td><td></td></tr>
+            </tbody>
+          </table>
 
-            <p class="card-text">Next, add the 3 fields below to the Data Extension:</p>
-            <table class="table table-bordered table-hover table-sm">
-              <thead>
-                <tr>
-                  <th scope="col">Field Name</th>
-                  <th scope="col">Data Type</th>
-                  <th scope="col">Length</th>
-                  <th scope="col">Primary Key</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>id</td>
-                  <td>Number</td>
-                  <td>N/A</td>
-                  <td>Yes (Checked)</td>
-                </tr>
-                <tr>
-                  <td>name</td>
-                  <td>Text</td>
-                  <td>50</td>
-                  <td>No (Unchecked)</td>
-                </tr>
-                <tr>
-                  <td>email</td>
-                  <td>EmailAddress</td>
-                  <td>254</td>
-                  <td>No (Unchecked)</td>
-                </tr>
-              </tbody>
-            </table>
+          <p class="card-text">Next, add the 3 fields below to the Data Extension:</p>
+          <table class="table table-bordered table-hover table-sm">
+            <thead>
+              <tr><th>Field Name</th><th>Data Type</th><th>Length</th><th>Primary Key</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>id</td><td>Number</td><td>N/A</td><td>Yes (Checked)</td></tr>
+              <tr><td>name</td><td>Text</td><td>50</td><td>No (Unchecked)</td></tr>
+              <tr><td>email</td><td>EmailAddress</td><td>254</td><td>No (Unchecked)</td></tr>
+            </tbody>
+          </table>
 
-            <p class="card-text"><span class="fa fa-thumbs-o-up text-success"></span>&nbsp;Your new Data Extension is ready to use!</p>
-          </div>
+          <p class="card-text"><span class="fa fa-thumbs-o-up text-success"></span>&nbsp;Your new Data Extension is ready to use!</p>
         </div>
       </div>
+    </div>
   
     <!-- Step 2 -->
     <div class="card mt-3">
@@ -132,7 +91,7 @@ DF18DEMO_CLIENTSECRET=<mark>YOUR_CLIENT_SECRET</mark>
                 <tr>
                   <th style="width: 50%" scope="col">
                     <button type="button" id="btnGetOauthToken" class="btn btn-primary"
-                      onclick="doRestGet('/accesstoken','textOauthPostResponse')">EXECUTE REQUEST</button>
+                      onclick="doRestGet('/apidemooauthtoken','textOauthPostResponse')">EXECUTE REQUEST</button>
                   </th>
                   <th style="width: 50%" scope="col">RESPONSE</th>
                 </tr>
@@ -183,7 +142,7 @@ https://auth.exacttargetapis.com/v1/requestToken</pre>
                 <tr>
                   <th style="width: 50%">
                     <button type="button" id="btnLoadData" class="btn btn-primary"
-                      onclick="doRestGet('/loaddata','textLoadDataPostResponse')">EXECUTE REQUEST</button>
+                      onclick="doRestGet('/apidemoloaddata','textLoadDataPostResponse')">EXECUTE REQUEST</button>
                   </th>
                   <th style="width: 50%">RESPONSE</th>
                 </tr>
