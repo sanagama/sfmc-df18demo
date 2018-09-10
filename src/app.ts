@@ -52,7 +52,7 @@ app.use(favicon(path.join(__dirname,'../static','images','favicons', 'favicon.ic
 // Routes: pages
 app.get('/', function(req, res) { res.render("apidemo"); });
 app.get('/apidemo', function(req, res) { res.render("apidemo"); });
-app.get('/appdemo', function(req, res) { res.render("apdemo"); });
+app.get('/appdemo', function(req, res) { res.render("appdemo"); });
 
 // Routes: used by this demo app that internally call Marketing Cloud REST APIs
 const apiDemoRoutes = new SfmcApiDemoRoutes();
