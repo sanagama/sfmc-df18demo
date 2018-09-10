@@ -44,13 +44,13 @@ export default class SfmcAppDemoRoutes
         Utils.logInfo("jwtSecret = \n" + jwtSecret);
         let decodedJWT = jwt.decode(encodedJWT, jwtSecret, true);
 
-        Utils.logInfo("Decoded JWT = \n" + decodedJWT);
+        Utils.logInfo("Decoded JWT = \n" + JSON.stringify(decodedJWT));
 
         let sfmcRequest = decodedJWT.request;
-        Utils.logInfo("sfmcRequest from JWT = \n" + sfmcRequest);
+        Utils.logInfo("sfmcRequest from JWT = \n" + JSON.stringify(sfmcRequest));
 
         let sfmcRest = decodedJWT.request.rest;
-        Utils.logInfo("sfmcRequest from JWT = \n" + sfmcRest);
+        Utils.logInfo("sfmcRest from JWT = \n" + JSON.stringify(sfmcRest));
 
         let authEndpoint = sfmcRest.authEndpoint;
         Utils.logInfo("authEndpoint from JWT = \n" + authEndpoint);
@@ -62,7 +62,13 @@ export default class SfmcAppDemoRoutes
         Utils.logInfo("refreshToken from JWT = \n" + refreshToken);
 
         let sfmcUser = decodedJWT.user;
-        Utils.logInfo("sfmcUser from JWT = \n" + sfmcUser);
+        Utils.logInfo("sfmcUser from JWT = \n" + JSON.stringify(sfmcUser));
+
+        let sfmcOrganization = decodedJWT.organization;
+        Utils.logInfo("sfmcOrganization from JWT = \n" + JSON.stringify(sfmcOrganization));
+
+        let sfmcApplication = decodedJWT.application;
+        Utils.logInfo("sfmcApplication from JWT = \n" + JSON.stringify(sfmcOrganization));
 
         res.sendStatus(202); // accepted
     }
