@@ -37,19 +37,20 @@ export default class SfmcAppDemoRoutes
 
         Utils.logInfo("POST body = \n" + JSON.stringify(req.body));
 
-        let encodedJWT = req.body.jwt;
-        Utils.logInfo("Encoded JWT = \n" + JSON.stringify(encodedJWT));
+        let encodedJWT = JSON.stringify(req.body.jwt);
+        Utils.logInfo("Encoded JWT = \n" + encodedJWT);
 
         let jwtSecret = process.env.DF18DEMO_JWTSECRET;
+        Utils.logInfo("jwtSecret = \n" + jwtSecret);
         let decodedJWT = jwt.decode(encodedJWT, jwtSecret);
 
-        Utils.logInfo("Decoded JWT = \n" + JSON.stringify(decodedJWT));
+        Utils.logInfo("Decoded JWT = \n" + decodedJWT);
 
         let sfmcRequest = decodedJWT.request;
-        Utils.logInfo("sfmcRequest from JWT = \n" + JSON.stringify(sfmcRequest));
+        Utils.logInfo("sfmcRequest from JWT = \n" + sfmcRequest);
 
         let sfmcRest = decodedJWT.request.rest;
-        Utils.logInfo("sfmcRequest from JWT = \n" + JSON.stringify(sfmcRest));
+        Utils.logInfo("sfmcRequest from JWT = \n" + sfmcRest);
 
         let authEndpoint = sfmcRest.authEndpoint;
         Utils.logInfo("authEndpoint from JWT = \n" + authEndpoint);
