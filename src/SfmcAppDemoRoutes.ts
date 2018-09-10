@@ -58,7 +58,7 @@ export default class SfmcAppDemoRoutes
         {
             let errorMsg = "Error while decoding JWT. Message: " + error;
             Utils.logError(errorMsg);
-            res.status(401).send(errorMsg);
+            res.status(400).send(errorMsg);
         }
     }
    
