@@ -42,7 +42,7 @@ export default class SfmcAppDemoRoutes
 
         let jwtSecret = process.env.DF18DEMO_JWTSECRET;
         Utils.logInfo("jwtSecret = \n" + jwtSecret);
-        let decodedJWT = jwt.decode(encodedJWT, jwtSecret, true);
+        let decodedJWT = jwt.decode(encodedJWT, jwtSecret, true); // passing 'noVerify = true' for this demo
 
         Utils.logInfo("Decoded JWT = \n" + JSON.stringify(decodedJWT));
 
@@ -68,9 +68,12 @@ export default class SfmcAppDemoRoutes
         Utils.logInfo("sfmcOrganization from JWT = \n" + JSON.stringify(sfmcOrganization));
 
         let sfmcApplication = sfmcRequest.application;
-        Utils.logInfo("sfmcApplication from JWT = \n" + JSON.stringify(sfmcOrganization));
+        Utils.logInfo("sfmcApplication from JWT = \n" + JSON.stringify(sfmcApplication));
 
-        res.sendStatus(202); // accepted
+        let redirectUrl = sfmcApplication.redirectUrl;
+        Utils.logInfo("Redirecting to: \n" + JSON.stringify(redirectUrl));
+
+        res.sendStatus(202).redirect(redirectUrl); // accepted
     }
    
     /**
