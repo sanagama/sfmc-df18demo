@@ -42,7 +42,7 @@ export default class SfmcAppDemoRoutes
 
         let jwtSecret = process.env.DF18DEMO_JWTSECRET;
         Utils.logInfo("jwtSecret = \n" + jwtSecret);
-        let decodedJWT = jwt.decode(encodedJWT, jwtSecret);
+        let decodedJWT = jwt.decode(encodedJWT, jwtSecret, true);
 
         Utils.logInfo("Decoded JWT = \n" + decodedJWT);
 
