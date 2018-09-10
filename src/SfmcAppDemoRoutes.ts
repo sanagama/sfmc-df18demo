@@ -61,13 +61,13 @@ export default class SfmcAppDemoRoutes
         let refreshToken = sfmcRest.refreshToken;
         Utils.logInfo("refreshToken from JWT = \n" + refreshToken);
 
-        let sfmcUser = decodedJWT.user;
+        let sfmcUser = sfmcRequest.user;
         Utils.logInfo("sfmcUser from JWT = \n" + JSON.stringify(sfmcUser));
 
-        let sfmcOrganization = decodedJWT.organization;
+        let sfmcOrganization = sfmcRequest.organization;
         Utils.logInfo("sfmcOrganization from JWT = \n" + JSON.stringify(sfmcOrganization));
 
-        let sfmcApplication = decodedJWT.application;
+        let sfmcApplication = sfmcRequest.application;
         Utils.logInfo("sfmcApplication from JWT = \n" + JSON.stringify(sfmcOrganization));
 
         res.sendStatus(202); // accepted
