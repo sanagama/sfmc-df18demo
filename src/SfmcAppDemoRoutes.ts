@@ -42,7 +42,7 @@ export default class SfmcAppDemoRoutes
             // Decode JWT
             let encodedJWT = JSON.stringify(req.body.jwt);
             let jwtSecret = process.env.DF18DEMO_JWTSECRET;
-            Utils.logInfo("Env var DF18DEMO_JWTSECRET = " + jwtSecret);
+            Utils.logInfo("Decodig JWT with secret in DF18DEMO_JWTSECRET = " + jwtSecret);
             self._decodedJWT = jwt.decode(encodedJWT, jwtSecret, true); // pass 'noVerify = true' for this demo
             Utils.logInfo("Decoded JWT from SFMC = \n" + Utils.prettyPrintJson(JSON.stringify(self._decodedJWT)));
 
