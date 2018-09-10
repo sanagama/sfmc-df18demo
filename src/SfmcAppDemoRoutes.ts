@@ -73,7 +73,7 @@ export default class SfmcAppDemoRoutes
         let redirectUrl = sfmcApplication.redirectUrl;
         Utils.logInfo("Redirecting to: \n" + JSON.stringify(redirectUrl));
 
-        res.sendStatus(202).redirect(redirectUrl); // accepted
+        res.redirect(redirectUrl); // redirect to MC app landing page
     }
    
     /**
