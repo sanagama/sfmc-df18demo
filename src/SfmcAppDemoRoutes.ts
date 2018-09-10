@@ -20,6 +20,10 @@ export default class SfmcAppDemoRoutes
     /**
      * login: called by Marketing Cloud when hosted app is launched. Decodes JWT in BODY passed by Marketing Cloud.
      * Handles POST on: /login
+     * Marketing Cloud does a POST on the '/login' route with the following JSON BODY:
+     * {
+     *  "jwt" : "<encoded JWT from SFMC>"
+     * }
      * 
      * More info: https://developer.salesforce.com/docs/atlas.en-us.mc-app-development.meta/mc-app-development/decode-jwt.htm
      * More info: https://developer.salesforce.com/docs/atlas.en-us.mc-app-development.meta/mc-app-development/explanation-decoded-jwt.htm
@@ -33,14 +37,28 @@ export default class SfmcAppDemoRoutes
 
         Utils.logInfo("POST body = \n" + JSON.stringify(req.body));
 
-        let encodedJWT = req.body;
+        let encodedJWT = req.body.jwt;
+        Utils.logInfo("Encoded JWT = \n" + JSON.stringify(encodedJWT));
+
         let jwtSecret = process.env.DF18DEMO_JWTSECRET;
         let decodedJWT = jwt.decode(encodedJWT, jwtSecret);
 
-        Utils.logInfo("Decoded JWT = \n" + decodedJWT);
+        Utils.logInfo("Decoded JWT = \n" + JSON.stringify(decodedJWT));
 
         let sfmcRequest = decodedJWT.request;
-        Utils.logInfo("sfmcRequest from JWT = \n" + sfmcRequest);
+        Utils.logInfo("sfmcRequest from JWT = \n" + JSON.stringify(sfmcRequest));
+
+        let sfmcRest = decodedJWT.request.rest;
+        Utils.logInfo("sfmcRequest from JWT = \n" + JSON.stringify(sfmcRest));
+
+        let authEndpoint = sfmcRest.authEndpoint;
+        Utils.logInfo("authEndpoint from JWT = \n" + authEndpoint);
+
+        let apiEndpointBase = sfmcRest.apiEndpointBase;
+        Utils.logInfo("apiEndpointBase from JWT = \n" + apiEndpointBase);
+
+        let refreshToken = sfmcRest.refreshToken;
+        Utils.logInfo("refreshToken from JWT = \n" + refreshToken);
 
         let sfmcUser = decodedJWT.user;
         Utils.logInfo("sfmcUser from JWT = \n" + sfmcUser);
