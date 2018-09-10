@@ -31,7 +31,7 @@ export default class SfmcAppDemoRoutes
         let sessionId = req.session.id;
         Utils.logInfo("login called. SessionId = " + sessionId);
 
-        Utils.logInfo("POST body = \n" + req.body);
+        Utils.logInfo("POST body = \n" + JSON.stringify(req.body));
 
         let encodedJWT = req.body;
         let jwtSecret = process.env.DF18DEMO_JWTSECRET;
