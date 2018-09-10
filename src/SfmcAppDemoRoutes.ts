@@ -42,7 +42,7 @@ export default class SfmcAppDemoRoutes
             // Decode JWT
             let encodedJWT = JSON.stringify(req.body.jwt);
             let jwtSecret = process.env.DF18DEMO_JWTSECRET;
-            Utils.logInfo("Decodig JWT with secret in DF18DEMO_JWTSECRET = " + jwtSecret);
+            Utils.logInfo("Decoding JWT with secret from DF18DEMO_JWTSECRET = " + jwtSecret);
             self._decodedJWT = jwt.decode(encodedJWT, jwtSecret, false); // pass 'noVerify = true' for this demo
             Utils.logInfo("Decoded JWT from SFMC = \n" + Utils.prettyPrintJson(JSON.stringify(self._decodedJWT)));
 
@@ -54,10 +54,11 @@ export default class SfmcAppDemoRoutes
             Utils.logInfo("Redirecting to: \n" + JSON.stringify(redirectUrl));
             res.redirect(redirectUrl); // redirect to MC app landing page
         }
-        catch(ex)
+        catch(error)
         {
-            Utils.logError(ex);
-            res.status(500).send(ex);
+            let errorMsg = "Error while decoding JWT. Message: " + error;
+            Utils.logError(errorMsg);
+            res.status(401).send(errorMsg);
         }
     }
    
