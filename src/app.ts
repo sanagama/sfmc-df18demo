@@ -25,7 +25,6 @@ app.set('view engine', 'ejs');
 // Use helmet. More info: https://expressjs.com/en/advanced/best-practice-security.html
 var helmet = require('helmet')
 app.use(helmet());
-
 // Allow X-Frame from Marketing Cloud. Sets "X-Frame-Options: ALLOW-FROM http://exacttarget.com".
 app.use(helmet.frameguard({
     action: 'allow-from',
@@ -52,7 +51,11 @@ app.use(favicon(path.join(__dirname,'../static','images','favicons', 'favicon.ic
 // Routes: pages
 app.get('/', function(req, res) { res.render("apidemo"); });
 app.get('/apidemo', function(req, res) { res.render("apidemo"); });
-app.get('/appdemo', function(req, res) { res.render("appdemo"); });
+
+// Pass session to appdemo view. This lets the view get the JWT JSON for display purposes later.
+app.get('/appdemo', function(req, res) {
+  res.render('appdemo.ejs', { session: req.session });
+});
 
 // Routes: used by this demo app that internally call Marketing Cloud REST APIs
 const apiDemoRoutes = new SfmcApiDemoRoutes();

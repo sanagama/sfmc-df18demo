@@ -43,8 +43,12 @@ export default class SfmcAppDemoRoutes
             let encodedJWT = JSON.stringify(req.body.jwt);
             let jwtSecret = process.env.DF18DEMO_JWTSECRET;
             Utils.logInfo("Decoding JWT with secret from DF18DEMO_JWTSECRET = " + jwtSecret);
-            self._decodedJWT = jwt.decode(encodedJWT, jwtSecret, false); // pass 'noVerify = true' for this demo
-            Utils.logInfo("Decoded JWT from SFMC = \n" + Utils.prettyPrintJson(JSON.stringify(self._decodedJWT)));
+            self._decodedJWT = jwt.decode(encodedJWT, jwtSecret, true); // pass 'noVerify = true' for this demo
+            
+            // Store in the current session for redirect URL to pick up later for display
+            let decodedJwtJson = Utils.prettyPrintJson(JSON.stringify(self._decodedJWT));
+            req.session.jwtFromSFMC = decodedJwtJson;
+            Utils.logInfo("Decoded JWT from SFMC = \n" + decodedJwtJson);
 
             // Get refreshToken from JWT
             self._refreshTokenFromJWT = self._decodedJWT.request.rest.refreshToken;

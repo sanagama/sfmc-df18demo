@@ -16,7 +16,37 @@
   <!-- Demo steps -->
   <div class="container">
 
-    <h4>Use Marketing Cloud REST APIs to load sample data into a Data Extension <em>from an app hosted within Marketing Cloud!</em></h4>
+    <div class="card mt-3">
+      <div class="card-block">
+        <div class="card-body">
+          <h4 class="card-subtitle mb-3">This web app is running as a Marketing Cloud app!</h4>
+          <h6 class="card-subtitle mb-3">Marketing Cloud apps live within Marketing Cloud web UI (in an IFRAME) and launch via the Marketing Cloud app menu. These include custom apps built by your organization or apps installed from AppExchange.</h6>
+
+          <h4>Use Marketing Cloud REST APIs to load sample data into a Data Extension <em>from a Marketing Cloud app!</em></h4>
+        </div>
+      </div>
+    </div>
+
+  
+    <!-- Step 1 -->
+    <div class="card mt-3">
+      <div class="card-block">
+        <div class="card-header text-white">Step 1: Get an OAuth access token</div>
+        <div class="card-body">
+          <h6 class="card-subtitle mb-3">You need an OAuth access token to authenticate your Marketing Cloud API calls from a Marketing Cloud app.</h6>
+
+          <p class="card-text">Marketing Cloud apps use a JSON Web Token (JWT) to acquire OAuth Access Tokens on behalf of logged in users. Marketing Cloud posts this JWT to the <mark>login</mark> endpoint configured for the app</p>
+
+          <p class="card-text">This Marketing Cloud app already received the JWT in its <mark>login</mark> endpoint and here's what it looks like:</p>
+
+          <pre><%= session.jwtFromSFMC %></pre>
+
+          <p class="card-text"><span class="fa fa-thumbs-o-up text-success"></span>&nbsp;You have everything you need to call the Marketing Cloud REST APIs to load sample data into your Data Extension!</p>
+
+        </div>
+      </div>
+    </div>
+
 
     <!-- Step 1 -->
     <div class="card mt-3">
@@ -91,7 +121,7 @@ DF18DEMO_CLIENTSECRET=<mark>YOUR_CLIENT_SECRET</mark>
                 <tr>
                   <th style="width: 50%" scope="col">
                     <button type="button" id="btnGetOauthToken" class="btn btn-primary"
-                      onclick="doRestGet('/accesstoken','textOauthPostResponse')">EXECUTE REQUEST</button>
+                      onclick="doRestGet('/appdemoauthtoken','textOauthPostResponse')">EXECUTE REQUEST</button>
                   </th>
                   <th style="width: 50%" scope="col">RESPONSE</th>
                 </tr>
