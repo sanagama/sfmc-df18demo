@@ -12,10 +12,6 @@ export default class SfmcAppDemoRoutes
 {
     // Instance variables
     private _apiHelper = new SfmcApiHelper();
-    private _oauthAccessToken: string;
-    private _oauthAccessTokenExpiry: Date;
-    private _decodedJWT: any;
-    private _refreshTokenFromJWT: string;
 
     /**
      * login: called by Marketing Cloud when hosted app is launched. Decodes JWT in BODY passed by Marketing Cloud.
@@ -36,6 +32,12 @@ export default class SfmcAppDemoRoutes
         let sessionId = req.session.id;
         Utils.logInfo("login called. SessionId = " + sessionId);
 
+        req.session.jwtFromSFMC = "";
+        req.session.decodedJWT = "";
+        req.session.refreshTokenFromJWT = "";
+        req.session.oauthAccessToken = "";
+        req.session.oauthAccessTokenExpiry = "";
+
         // Decode JWT with the secret from environment variable.
         try
         {
@@ -43,18 +45,17 @@ export default class SfmcAppDemoRoutes
             let encodedJWT = JSON.stringify(req.body.jwt);
             let jwtSecret = process.env.DF18DEMO_JWTSECRET;
             Utils.logInfo("Decoding JWT with secret from DF18DEMO_JWTSECRET = " + jwtSecret);
-            self._decodedJWT = jwt.decode(encodedJWT, jwtSecret, true); // pass 'noVerify = true' for this demo
+            req.session.decodedJWT = jwt.decode(encodedJWT, jwtSecret, true); // pass 'noVerify = true' for this demo
             
-            // Store in the current session for redirect URL to pick up later for display
-            let decodedJwtJson = Utils.prettyPrintJson(JSON.stringify(self._decodedJWT));
-            req.session.jwtFromSFMC = decodedJwtJson;
-            Utils.logInfo("Decoded JWT from SFMC = \n" + decodedJwtJson);
+            // Store JWT in the current session for redirect URL to pick up for display
+            req.session.jwtFromSFMC = Utils.prettyPrintJson(JSON.stringify(req.session.decodedJWT));
+            Utils.logInfo("Decoded JWT from SFMC = \n" + req.session.jwtFromSFMC);
 
-            // Get refreshToken from JWT
-            self._refreshTokenFromJWT = self._decodedJWT.request.rest.refreshToken;
-            Utils.logInfo("refreshToken from JWT = \n" + self._refreshTokenFromJWT);
+            // Get refreshToken from JWT and store in the current session for redirect URL to pick up for display
+            req.session.refreshTokenFromJWT = req.session.decodedJWT.request.rest.refreshToken;
+            Utils.logInfo("refreshToken from JWT = \n" + req.session.refreshTokenFromJWT);
 
-            let redirectUrl = self._decodedJWT.request.application.redirectUrl;
+            let redirectUrl = req.session.decodedJWT.request.application.redirectUrl;
             Utils.logInfo("Redirecting to: \n" + JSON.stringify(redirectUrl));
             res.redirect(redirectUrl); // redirect to MC app landing page
         }
@@ -78,10 +79,11 @@ export default class SfmcAppDemoRoutes
         Utils.logInfo("logout called. SessionId = " + sessionId);
 
         // Clear out JWT and everything we got from it.
-        self._oauthAccessToken = "";
-        self._oauthAccessTokenExpiry = null;
-        self._decodedJWT = null;
-        self._refreshTokenFromJWT = "";
+        req.session.jwtFromSFMC = "";
+        req.session.decodedJWT = "";
+        req.session.refreshTokenFromJWT = "";
+        req.session.oauthAccessToken = "";
+        req.session.oauthAccessTokenExpiry = "";
     
         res.sendStatus(202); // accepted
     }
@@ -97,29 +99,42 @@ export default class SfmcAppDemoRoutes
     {
         let self = this;
         let sessionId = req.session.id;
-        //let clientId = process.env.DF18DEMO_CLIENTID;
-        //let clientSecret = process.env.DF18DEMO_CLIENTSECRET;
+        let clientId = process.env.DF18DEMO_CLIENTID;
+        let clientSecret = process.env.DF18DEMO_CLIENTSECRET;
+
+        req.session.oauthAccessToken = "";
+        req.session.oauthAccessTokenExpiry = "";
 
         Utils.logInfo("getOAuthAccessToken route entered. SessionId = " + sessionId);
 
-        if (self._refreshTokenFromJWT)
+        if (clientId && clientSecret)
         {
-            Utils.logInfo("Getting OAuth Access Token with refreshToken: " + self._refreshTokenFromJWT);
-
-            self._apiHelper.getOAuthAccessTokenFromRefreshToken(self._refreshTokenFromJWT)
-            .then((result) => {
-                self._oauthAccessToken = result.oauthAccessToken;
-                self._oauthAccessTokenExpiry = result.oauthAccessTokenExpiry;
-                res.status(result.status).send(result.statusText);
-            })
-            .catch((err) => {
-                res.status(500).send(err);
-            });
+            if (req.session.refreshTokenFromJWT)
+            {
+                Utils.logInfo("Getting OAuth Access Token with ClientID and ClientSecret from in environment variables and refreshToken: " + req.session.refreshTokenFromJWT);
+    
+                self._apiHelper.getOAuthAccessTokenFromRefreshToken(clientId, clientSecret, req.session.refreshTokenFromJWT)
+                .then((result) => {
+                    req.session.oauthAccessToken = result.oauthAccessToken;
+                    req.session.oauthAccessTokenExpiry = result.oauthAccessTokenExpiry;
+                    res.status(result.status).send(result.statusText);
+                })
+                .catch((err) => {
+                    res.status(500).send(err);
+                });
+            }
+            else
+            {
+                // error
+                let errorMsg = "refreshToken *not* found in session.\nCheck the '/login' URL specified in your\nMarketing Cloud App configuration."; 
+                Utils.logError(errorMsg);
+                res.status(500).send(errorMsg);
+            }
         }
         else
         {
             // error
-            let errorMsg = "refreshToken *not* found. Check the '/login' URL specified in your Marketing Cloud App configuration."; 
+            let errorMsg = "ClientID or ClientSecret *not* found in environment variables."; 
             Utils.logError(errorMsg);
             res.status(500).send(errorMsg);
         }
@@ -138,11 +153,11 @@ export default class SfmcAppDemoRoutes
         let sessionId = req.session.id;
         Utils.logInfo("loadData route entered. SessionId = " + sessionId);
 
-        if (self._oauthAccessToken)
+        if (req.session.oauthAccessToken)
         {
-            Utils.logInfo("Using OAuth token: " + self._oauthAccessToken);
+            Utils.logInfo("Using OAuth token: " + req.session.oauthAccessToken);
             let jsonDataFilePath = path.join(__dirname, '../static', 'json', 'sample-data.json');
-            self._apiHelper.loadData(self._oauthAccessToken, jsonDataFilePath)
+            self._apiHelper.loadData(req.session.oauthAccessToken, jsonDataFilePath)
             .then((result) => {
                 res.status(result.status).send(result.statusText);
             })
@@ -153,22 +168,9 @@ export default class SfmcAppDemoRoutes
         else
         {
             // error
-            let errorMsg = "OAuth Access Token *not* found.\nPlease complete previous demo step\nto get an OAuth Access Token."; 
+            let errorMsg = "OAuth Access Token *not* found in session.\nPlease complete previous demo step\nto get an OAuth Access Token."; 
             Utils.logError(errorMsg);
             res.status(500).send(errorMsg);
         }
     }
-
-    /**
-     * getJwtInfo: called by web app to obtain JWT for display purposes
-     * Handles GET on: /jwtinfo
-     * 
-     */
-    public getJwtInfo(req: express.Request, res: express.Response)
-    {
-        let self = this;
-        let sessionId = req.session.id;
-        Utils.logInfo("getJwtInfo called. SessionId = " + sessionId);
-        res.status(202).send(Utils.prettyPrintJson(JSON.stringify(self._decodedJWT))); // accepted
-    }    
 }

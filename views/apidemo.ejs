@@ -6,24 +6,28 @@
 
 <body>
 
-  <% include ./partials/brand.ejs %>
-
-  <div class="container">
-    <h2>Getting Started With Salesforce Marketing Cloud API Integrations</h2>
-    <h2><small>Dreamforce 2018</small></h2>
-  </div>
+  <% include ./partials/body-header.ejs %>
 
   <!-- Demo steps -->
   <div class="container">
 
     <h4>Use Marketing Cloud REST APIs to load sample data into a Data Extension.</h4>
 
+    <div class="card mt-3">
+      <div class="card-block">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-3">This web app is running outside the Marketing Cloud</h6>
+          <h6 class="card-subtitle mb-3">You can host this web app anywhere you wish (e.g your computer, data center or the cloud) and use REST APIs to interact with Marketing Cloud.</h6>
+        </div>
+      </div>
+    </div>
+  
     <!-- Step 1 -->
     <div class="card mt-3">
       <div class="card-block">
         <div class="card-header text-white">Step 1: Create a Data Extension</div>
         <div class="card-body">
-          <h6 class="card-subtitle mb-3">You need a Data Extension for this demo app.</h6>
+          <h6 class="card-subtitle mb-3">This demo app needs a Data Extension to work with.</h6>
           <p class="card-text">Login to your Marketing Cloud account and follow instructions at <a href="https://help.salesforce.com/articleView?id=mc_cab_create_a_new_data_extension.htm&type=5" target="_blank">Create Data Extension</a> to create a new Standard Data Extension as follows:</p>
  
           <table class="table table-bordered table-hover table-sm">
@@ -69,7 +73,6 @@
 DF18DEMO_CLIENTID=<mark>YOUR_CLIENT_ID</mark>
 DF18DEMO_CLIENTSECRET=<mark>YOUR_CLIENT_SECRET</mark>
 </pre>
-
           <p>
           <p class="card-text"><span class="fa fa-thumbs-o-up text-success"></span>&nbsp;You're ready to use your API key with the Marketing Cloud REST APIs!</p>
         </div>
@@ -81,7 +84,7 @@ DF18DEMO_CLIENTSECRET=<mark>YOUR_CLIENT_SECRET</mark>
       <div class="card-block">
         <div class="card-header text-white">Step 3: Get an OAuth access token</div>
         <div class="card-body">
-          <h6 class="card-subtitle mb-3">You need an OAuth access token to authenticate your Marketing Cloud API calls.</h6>
+          <h6 class="card-subtitle mb-3">You need an OAuth access token to authenticate REST API calls to Marketing Cloud.</h6>
           <p class="card-text">Click <kbd>EXECUTE REQUEST</kbd> to call the Marketing Cloud REST Auth service and get back an OAuth access token. This token is valid for 60 minutes.</p>
           <p class="card-text">The demo app updates <mark>YOUR_CLIENT_ID</mark> and <mark>YOUR_CLIENT_SECRET</mark> in the JSON body with your <code>ClientID</code> and <code>ClientSecret</code> from environment variables before calling POST.</p>
 
@@ -108,7 +111,7 @@ https://auth.exacttargetapis.com/v1/requestToken</pre>
                     <pre>Content-Type: application/json</pre>
                     <p>
                     <h6>Request Body</h6>
-<pre>
+                    <pre>
 {
   "clientId": <mark>YOUR_CLIENT_ID</mark>,
   "clientSecret": <mark>YOUR_CLIENT_SECRET</mark>
@@ -133,8 +136,8 @@ https://auth.exacttargetapis.com/v1/requestToken</pre>
         <div class="card-body">
           <h6 class="card-subtitle mb-3">Use the Marketing Cloud REST API to load data into the Data Extension.</h6>
           <p class="card-text">Click <kbd>EXECUTE REQUEST</kbd> to call the Marketing Cloud REST API to load data.</p>
-          <p class="card-text">The demo app updates <mark>OAUTH_ACCESS_TOKEN</mark> in the JSON body with the OAuth token before calling POST.<p>
-          <p class="card-text">Note how we're passing <mark>DF18Demo</mark> in the URL as the External Key of the Data Extension.</p>
+          <p class="card-text">The demo app updates <code><mark>OAUTH_ACCESS_TOKEN</mark></code> in the JSON body with the OAuth token before calling POST.<p>
+          <p class="card-text">Note how we're passing <code><mark>DF18Demo</mark></code> in the URL as the External Key of the Data Extension.</p>
 
           <div class="table-responsive">       
             <table class="table table-bordered">

@@ -9,8 +9,6 @@ export default class SfmcApiDemoRoutes
 {
     // Instance variables
     private _apiHelper = new SfmcApiHelper();
-    private _oauthAccessToken: string;
-    private _oauthAccessTokenExpiry: Date;
 
     /**
      * GET handler for /apidemooauthtoken
@@ -26,16 +24,19 @@ export default class SfmcApiDemoRoutes
         let clientId = process.env.DF18DEMO_CLIENTID;
         let clientSecret = process.env.DF18DEMO_CLIENTSECRET;
 
-        Utils.logInfo("getOAuthAccessTokenApiDemo route entered. SessionId = " + sessionId);
+        req.session.oauthAccessToken = "";
+        req.session.oauthAccessTokenExpiry = "";
+
+        Utils.logInfo("getOAuthAccessToken route entered. SessionId = " + sessionId);
 
         if (clientId && clientSecret)
         {
-            Utils.logInfo("Getting OAuth Access Token with ClientID and ClientSecret found in environment variables.");
+            Utils.logInfo("Getting OAuth Access Token with ClientID and ClientSecret from in environment variables.");
 
             self._apiHelper.getOAuthAccessToken(clientId, clientSecret)
             .then((result) => {
-                self._oauthAccessToken = result.oauthAccessToken;
-                self._oauthAccessTokenExpiry = result.oauthAccessTokenExpiry;
+                req.session.oauthAccessToken = result.oauthAccessToken;
+                req.session.oauthAccessTokenExpiry = result.oauthAccessTokenExpiry;
                 res.status(result.status).send(result.statusText);
             })
             .catch((err) => {
@@ -64,11 +65,11 @@ export default class SfmcApiDemoRoutes
         let sessionId = req.session.id;
         Utils.logInfo("loadData route entered. SessionId = " + sessionId);
 
-        if (self._oauthAccessToken)
+        if (req.session.oauthAccessToken)
         {
-            Utils.logInfo("Using OAuth token: " + self._oauthAccessToken);
+            Utils.logInfo("Using OAuth token: " + req.session.oauthAccessToken);
             let jsonDataFilePath = path.join(__dirname, '../static', 'json', 'sample-data.json');
-            self._apiHelper.loadData(self._oauthAccessToken, jsonDataFilePath)
+            self._apiHelper.loadData(req.session.oauthAccessToken, jsonDataFilePath)
             .then((result) => {
                 res.status(result.status).send(result.statusText);
             })
@@ -79,7 +80,7 @@ export default class SfmcApiDemoRoutes
         else
         {
             // error
-            let errorMsg = "OAuth Access Token *not* found.\nPlease complete previous demo step\nto get an OAuth Access Token."; 
+            let errorMsg = "OAuth Access Token *not* found in session.\nPlease complete previous demo step\nto get an OAuth Access Token."; 
             Utils.logError(errorMsg);
             res.status(500).send(errorMsg);
         }

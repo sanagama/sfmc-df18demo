@@ -40,7 +40,7 @@ export default class SfmcApiHelper
      * More info: https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-getting-started.meta/mc-getting-started/get-access-token.htm
      * 
      */
-    public getOAuthAccessTokenFromRefreshToken(refreshToken: string) : Promise<any>
+    public getOAuthAccessTokenFromRefreshToken(clientId: string, clientSecret: string, refreshToken: string) : Promise<any>
     {
         let self = this;
         Utils.logInfo("getOAuthAccessTokenFromRefreshToken called.");
@@ -51,6 +51,8 @@ export default class SfmcApiHelper
         };
 
         let postBody = {
+            'clientId': clientId,
+            'clientSecret': clientSecret,
             'refreshToken': refreshToken
         };
 
@@ -88,7 +90,7 @@ export default class SfmcApiHelper
                 let errorMsg = "Error getting OAuth Access Token.";
                 errorMsg += "\nMessage: " + error.message;
                 errorMsg += "\nStatus: " + error.response ? error.response.status : "<None>";
-                errorMsg += "\nResponse data: " + error.response ? error.response.data : "<None>";
+                errorMsg += "\nResponse data: " + error.response ? Utils.prettyPrintJson(JSON.stringify(error.response.data)) : "<None>";
                 Utils.logError(errorMsg);
 
                 reject(errorMsg);

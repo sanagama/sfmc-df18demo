@@ -57,27 +57,28 @@ app.get('/appdemo', function(req, res) {
   res.render('appdemo.ejs', { session: req.session });
 });
 
-// Routes: used by this demo app that internally call Marketing Cloud REST APIs
 const apiDemoRoutes = new SfmcApiDemoRoutes();
+const appDemoRoutes = new SfmcAppDemoRoutes();
 
+// Routes: used by this demo app that internally call Marketing Cloud REST APIs
 app.get('/apidemooauthtoken', function(req, res) {
   apiDemoRoutes.getOAuthAccessToken(req, res); });
 
 app.get('/apidemoloaddata', function(req, res) {
   apiDemoRoutes.loadData(req, res); });
     
-// Routes: called when this demo app is hosted within an IFRAME in the Marketing Cloud web UI
-const appDemoRoutes = new SfmcAppDemoRoutes();
-
+// Routes: called when this demo app runs as a Marketing Cloud app in an IFRAME in the Marketing Cloud web UI
 app.get('/appdemoauthtoken', function(req, res) {
   appDemoRoutes.getOAuthAccessToken(req, res); });
 
 app.get('/appdemoloaddata', function(req, res) {
   appDemoRoutes.loadData(req, res); });
-  
+
+// Marketing Cloud POSTs the JWT to the '/login' endpoint when a user logs in
 app.post('/login', function(req, res) {
   appDemoRoutes.login(req, res); });
 
+// Marketing Cloud POST to the '/logout' endpoint when a user logs out
 app.post('/logout', function(req, res) {
   appDemoRoutes.logout(req, res); });
 
