@@ -29,7 +29,7 @@ if(process.env.RUNNING_IN_HEROKU)
 {
   // Start 'http' server because SSL termination occurs at Heroku's load balancers
   // See: https://stackoverflow.com/questions/25148507/https-ssl-on-heroku-node-express
-  let server = https.createServer(httpsOptions, app).listen(app.get("port"), () => {
+  let server = http.createServer(app).listen(app.get("port"), () => {
     onListening(false, app.get("env"), server.address() as AddressInfo);
   });
 }
