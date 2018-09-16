@@ -76,7 +76,7 @@ export default class Utils
                     },
                     values: {
                         name: 'Sanjay - ' + shortid.generate(),
-                        email:'sanjay-' + shortid.generate() + '@sanjay.com'
+                        email: 'sanjay-' + shortid.generate() + '@sanjay.com',
                     }
                 },
                 {
