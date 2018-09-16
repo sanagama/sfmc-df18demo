@@ -62,27 +62,7 @@ export default class SfmcApiDemoRoutes
     public loadData(req: express.Request, res: express.Response)
     {
         let self = this;
-        let sessionId = req.session.id;
-        Utils.logInfo("loadData route entered. SessionId = " + sessionId);
-
-        if (req.session.oauthAccessToken)
-        {
-            Utils.logInfo("Using OAuth token: " + req.session.oauthAccessToken);
-            let jsonDataFilePath = path.join(__dirname, '../static', 'json', 'sample-data.json');
-            self._apiHelper.loadData(req.session.oauthAccessToken, jsonDataFilePath)
-            .then((result) => {
-                res.status(result.status).send(result.statusText);
-            })
-            .catch((err) => {
-                res.status(500).send(err);
-            });
-        }
-        else
-        {
-            // error
-            let errorMsg = "OAuth Access Token *not* found in session.\nPlease complete previous demo step\nto get an OAuth Access Token."; 
-            Utils.logError(errorMsg);
-            res.status(500).send(errorMsg);
-        }
+        Utils.logInfo("loadData route entered.");
+        self._apiHelper.loadData(req, res);
     }
 }

@@ -10,9 +10,7 @@ import { AddressInfo } from "net";
 
 const app = require("./app");
 
-/**
- * Error Handler. Provides full stack - remove for production
- */
+// Error Handler. Provides full stack - remove for production
 app.use(errorHandler());
 
 // If running in Heroku then run 'http' server, else run 'https' server
@@ -42,6 +40,7 @@ else
   });
 }
 
+// Helper to log status after Express starts
 function onListening(isHttps: boolean, mode: string, addressInfo: AddressInfo)
 {
   let scheme = isHttps ? "https" : "http";

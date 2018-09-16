@@ -11,6 +11,7 @@ import * as favicon from "serve-favicon";
 import * as session from "express-session";
 import SfmcApiDemoRoutes from './SfmcApiDemoRoutes';
 import SfmcAppDemoRoutes from './SfmcAppDemoRoutes';
+import Utils from './Utils';
 
 const PORT = process.env.PORT || 5000
 
@@ -49,13 +50,9 @@ app.use(express.static(path.join(__dirname, "../static")));
 app.use(favicon(path.join(__dirname,'../static','images','favicons', 'favicon.ico')));
 
 // Routes: pages
-app.get('/', function(req, res) { res.render("apidemo"); });
-app.get('/apidemo', function(req, res) { res.render("apidemo"); });
-
-// Pass session to appdemo view. This lets the view get the JWT JSON for display purposes later.
-app.get('/appdemo', function(req, res) {
-  res.render('appdemo.ejs', { session: req.session });
-});
+app.get('/', function(req, res) { Utils.initSampleDataAndRenderView(req, res, 'apidemo.ejs') });
+app.get('/apidemo', function(req, res) { Utils.initSampleDataAndRenderView(req, res, 'apidemo.ejs') });
+app.get('/appdemo', function(req, res) { Utils.initSampleDataAndRenderView(req, res, 'appdemo.ejs') });
 
 const apiDemoRoutes = new SfmcApiDemoRoutes();
 const appDemoRoutes = new SfmcAppDemoRoutes();
@@ -64,21 +61,18 @@ const appDemoRoutes = new SfmcAppDemoRoutes();
 app.get('/apidemooauthtoken', function(req, res) {
   apiDemoRoutes.getOAuthAccessToken(req, res); });
 
-app.get('/apidemoloaddata', function(req, res) {
+app.get('/loaddata', function(req, res) {
   apiDemoRoutes.loadData(req, res); });
     
 // Routes: called when this demo app runs as a Marketing Cloud app in an IFRAME in the Marketing Cloud web UI
 app.get('/appdemoauthtoken', function(req, res) {
   appDemoRoutes.getOAuthAccessToken(req, res); });
 
-app.get('/appdemoloaddata', function(req, res) {
-  appDemoRoutes.loadData(req, res); });
-
 // Marketing Cloud POSTs the JWT to the '/login' endpoint when a user logs in
 app.post('/login', function(req, res) {
   appDemoRoutes.login(req, res); });
 
-// Marketing Cloud POST to the '/logout' endpoint when a user logs out
+// Marketing Cloud POSTs to the '/logout' endpoint when a user logs out
 app.post('/logout', function(req, res) {
   appDemoRoutes.logout(req, res); });
 

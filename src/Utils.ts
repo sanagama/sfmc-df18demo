@@ -1,9 +1,7 @@
 'use strict';
 
-import path = require('path');
 import * as winston from "winston";
-import express = require("express");
-import SfmcApiHelper from './SfmcApiHelper';
+import * as shortid from "shortid";
 
 // Configure logging
 winston.configure({
@@ -19,47 +17,80 @@ winston.configure({
 
 export default class Utils
 {
-    // Helper to log messages
+    /**
+     * logInfo: Helper to log Info messages
+     * 
+     */
     public static logInfo(msg: any)
     {
         winston.info(msg);
     }
 
-    // Helper to log messages
+    /**
+     * logError: Helper to log Error messages
+     * 
+     */
     public static logError(msg: any)
     {
         winston.error(msg);
     }
 
-    // prettyPrintJson: helper to pretty print a flat JSON string
+    /**
+     * prettyPrintJson: helper to pretty print a flat JSON string
+     * 
+     */
     public static prettyPrintJson(jsonString: string)
     {
         return JSON.stringify(JSON.parse(jsonString), null, 2);
     }
 
-    public static loadDataHelper(apiHelper: SfmcApiHelper, req: express.Request, res: express.Response)
+    /**
+     * initSampleDataAndRenderView: Called to render /apidemo and /appdemo views
+     * 
+     * Helper to init sample JSON data for this session and pass the session to the view
+     * This lets the view access session variables (e.g. JWT JSON and sample data) for display purposes.
+     * 
+     */
+    public static initSampleDataAndRenderView(req: any, res: any, viewName: string)
     {
-        let sessionId = req.session.id;
-        Utils.logInfo("loadDataHelper entered. SessionId = " + sessionId);
+      Utils.initSampleData()
+      .then((sampleData: string) => {
+        req.session.sampleJsonData = sampleData;
+        res.render(viewName, { session: req.session });
+      });
+    }
 
-        if (req.session.oauthAccessToken)
+    /**
+     * initSampleData: Called on session start to generate sample JSON data to insert into Data Extension
+     * 
+     */
+    private static initSampleData() : Promise<string>
+    {
+        Utils.logInfo("initSampleData called.");
+        return new Promise<string>((resolve, reject) =>
         {
-            Utils.logInfo("Using OAuth token: " + req.session.oauthAccessToken);
-            let jsonDataFilePath = path.join(__dirname, '../static', 'json', 'sample-data.json');
-            apiHelper.loadData(req.session.oauthAccessToken, jsonDataFilePath)
-            .then((result) => {
-                res.status(result.status).send(result.statusText);
-            })
-            .catch((err) => {
-                res.status(500).send(err);
-            });
-        }
-        else
-        {
-            // error
-            let errorMsg = "OAuth Access Token *not* found in session.\nPlease complete previous demo step\nto get an OAuth Access Token."; 
-            Utils.logError(errorMsg);
-            res.status(500).send(errorMsg);
-        }
-    }    
+            let sampleData = [
+                {
+                    keys: {
+                        id: shortid.generate()
+                    },
+                    values: {
+                        name: 'Sanjay - ' + shortid.generate(),
+                        email:'sanjay-' + shortid.generate() + '@sanjay.com'
+                    }
+                },
+                {
+                    keys: {
+                        id: shortid.generate()
+                    },
+                    values: {
+                        name: 'Savita - ' + shortid.generate(),
+                        email: 'savita-' + shortid.generate() + '@savita.com'
+                    }
+                }             
+            ];
+
+            resolve(Utils.prettyPrintJson(JSON.stringify(sampleData)));
+        });
+    }
 }

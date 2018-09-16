@@ -1,0 +1,50 @@
+<!-- Partial ejs with steps to load data into Data Extension -->
+
+<div class="card mt-3">
+    <div class="card-block">
+        <div class="card-header text-white"><%= stepTitle %></div>
+        <div class="card-body">
+            <h6 class="card-subtitle mb-3">Use the Marketing Cloud REST API to load data into the Data Extension.</h6>
+            <p class="card-text">Click <kbd>EXECUTE REQUEST</kbd> to call the Marketing Cloud REST API to load data.</p>
+            <p class="card-text">The demo app updates <code><mark>OAUTH_ACCESS_TOKEN</mark></code> in the JSON body with the OAuth token before calling POST.<p>
+            <p class="card-text">Note how we're passing <code><mark>DF18Demo</mark></code> in the URL as the External Key of the Data Extension.</p>
+
+            <div class="table-responsive">       
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th style="width: 50%">
+                                <button type="button" id="btnLoadData" class="btn btn-primary"
+                                onclick="doRestGet('/loaddata','textLoadDataPostResponse')">EXECUTE REQUEST</button>
+                            </th>
+                            <th style="width: 50%">RESPONSE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <h6>URL</h6>
+<pre>
+POST
+https://www.exacttargetapis.com/hub/v1/dataevents/<mark>key:DF18Demo</mark>/rowset
+</pre>
+                                <p>
+                                <h6>Headers</h6>
+<pre>
+Content-Type: application/json
+Authorization: Bearer <mark>OAUTH_ACCESS_TOKEN</mark>
+</pre>
+                                <p>
+                                <h6>Request Body</h6>
+                                <pre><%= session.sampleJsonData %></pre>
+                            </td>
+                            <td><pre id="textLoadDataPostResponse">Click <kbd>EXECUTE REQUEST</kbd> to see response.</pre></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="card-text"><span class="fa fa-thumbs-o-up text-success"></span>&nbsp;You've successfully loaded sample data into your Data Extension. Head over to your Marketing Cloud account to take a look!</p>
+        </div> <!-- Card body -->
+    </div> <!-- Card block -->
+</div> <!-- Card -->

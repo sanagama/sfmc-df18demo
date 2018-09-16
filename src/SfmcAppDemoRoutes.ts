@@ -73,7 +73,6 @@ export default class SfmcAppDemoRoutes
      */
     public logout(req: express.Request, res: express.Response)
     {
-        let self = this;
         let sessionId = req.session.id;
         Utils.logInfo("logout called. SessionId = " + sessionId);
 
@@ -137,19 +136,5 @@ export default class SfmcAppDemoRoutes
             Utils.logError(errorMsg);
             res.status(500).send(errorMsg);
         }
-    }
-
-    /**
-     * GET handler for /appdemoloaddata
-     * loadData: called by the demo app to load sample data into the Data Extension "DF18Demo";'
-     * 
-     * More info: https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-apis.meta/mc-apis/postDataExtensionRowsetByKey.htm
-     * 
-     */
-    public loadData(req: express.Request, res: express.Response)
-    {
-        Utils.logInfo("loadData route entered.");
-        let self = this;
-        Utils.loadDataHelper(self._apiHelper, req, res);
     }
 }
