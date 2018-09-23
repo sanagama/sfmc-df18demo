@@ -1,10 +1,10 @@
 # What's here?
 
-## A sample Node.js web app that uses Marketing Cloud REST APIs to load sample data into a Data Extension.
+## A demo Node.js web app that uses Marketing Cloud REST APIs to load sample data into a Data Extension.
 
 ## Introduction
 
-This demo was shown in the session [Getting Started with Marketing Cloud API Integrations](https://success.salesforce.com/sessions?eventId=a1Q3A00001XoCSUUA3#/session/a2q3A0000022FHaQAM) at Dreamforce 2018.
+These demos were shown in the session [Getting Started with Marketing Cloud API Integrations](https://success.salesforce.com/sessions?eventId=a1Q3A00001XoCSUUA3#/session/a2q3A0000022FHaQAM) at Dreamforce 2018.
 
 This web app consists of 2 demos:
 1. A standalone web app that uses REST APIs to load data into Marketing Cloud
