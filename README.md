@@ -83,15 +83,17 @@ Download and install Node.js for your operating system: <https://nodejs.org/en/d
 
 ### Run the web app
 
-1. Type the following commands in the ```Terminal``` window to run the web app:
+Type the following commands in the ```Terminal``` window to run the web app:
 
-    ```
-    cd ~/sfmc-df18demo
-    npm install
-    npm run
-    ```
+```
+cd ~/sfmc-df18demo
+npm install
+npm run
+```
 
-### Try the standalone API demo
+### Demo #1: Standalone app
+
+In this demo, the web app running locally on ```https://localhost:5000``` calls the appropriate Marketing Cloud REST APIs to load sample data into the ```DF18Demo``` Data Extension.
 
 1. Launch your browser and navigate to <https://localhost:5000>
 1. You've already completed Step #1 and Step #2.
@@ -100,7 +102,9 @@ Download and install Node.js for your operating system: <https://nodejs.org/en/d
 1. Go back to Marketing Cloud and navigate to the ```DF18Demo``` Data Extension.
 1. Click ```Records``` to see 2 new records added by the web app.
 
-### Try the Marketing Cloud App demo
+### Demo #2: Marketing Cloud App
+
+In this demo, the web app running locally on ```https://localhost:5000``` is displayed within Marketing Cloud web UI (in an IFRAME) and is launched via the Marketing Cloud app menu to load sample data into the ```DF18Demo``` Data Extension.
 
 1. Login into Marketing Cloud
 1. Click on your Marketing Cloud App under ```AppExchange``` in the top navigation bar.
