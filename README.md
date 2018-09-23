@@ -60,7 +60,7 @@ See [API Integration](https://developer.salesforce.com/docs/atlas.en-us.mc-app-d
     - ```DF18DEMO_CLIENTID=YOUR_CLIENTID```
     - ```DF18DEMO_CLIENTSECRET=YOUR_CLIENTSECRET```
 
-1. Get ```JWT SIGNING SECRET``` from the Marketing Cloud App put in the following environment variable on your local computer:
+1. Get the ```JWT SIGNING SECRET``` from the Marketing Cloud App put in the following environment variable on your local computer:
     - ```DF18DEMO_JWTSECRET=YOUR_JWT_SIGNING_SECRET```
 
 See [Get an API Key](https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-getting-started.meta/mc-getting-started/get-api-key.htm) for more details.
