@@ -1,6 +1,6 @@
 # What's here?
 
-## A demo Node.js web app that uses Marketing Cloud REST APIs to load sample data into a Data Extension.
+## A Node.js web app that uses Marketing Cloud REST APIs to load sample data into a Data Extension.
 
 ## Introduction
 
